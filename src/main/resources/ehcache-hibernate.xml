@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="ehcache.xsd" updateCheck="false"
+	monitoring="autodetect" dynamicConfig="true">
+
+	<diskStore path="java.io.tmpdir"/>
+	
+	<defaultCache maxElementsInMemory="10000" eternal="false"
+		timeToIdleSeconds="1000" timeToLiveSeconds="2000" overflowToDisk="true"
+		maxElementsOnDisk="10000" diskPersistent="false"
+		diskExpiryThreadIntervalSeconds="120" memoryStoreEvictionPolicy="LRU" />
+	
+	<cache name="Users" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Blogs" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Post_categories" maxElementsInMemory="500"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Posts" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Drafts" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Comments" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Private_Message" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Concern" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+	
+	<cache name="Feed" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Visits" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Favorites" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="Favorite_tags" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="UserSettings" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+		
+	<!-- 自定义 -->
+	<cache name="userStatus" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="false"
+		diskSpoolBufferSizeMB="100" timeToIdleSeconds="900" timeToLiveSeconds="900"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="unReadPrivateMessageCount" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="unReadRemindCount" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+	<cache name="userLastFeed" maxElementsInMemory="1000"
+		maxElementsOnDisk="1000" eternal="false" overflowToDisk="true"
+		diskSpoolBufferSizeMB="20" timeToIdleSeconds="1000" timeToLiveSeconds="2000"
+		memoryStoreEvictionPolicy="LFU" />
+		
+</ehcache>  

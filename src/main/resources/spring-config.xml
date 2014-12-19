@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
+       	
+	<!-- 自动扫描管理Bean -->
+	<context:component-scan base-package="org.cgz.oseye" >
+		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+	</context:component-scan>
+	
+	<!-- 开启切面代理 -->
+	<aop:aspectj-autoproxy proxy-target-class="true"/>
+	
+	<!-- 让spring管理sessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+		<property name="dataSource" ref="dataSource" />
+		<!-- hibernate配置 -->
+		<property name="hibernateProperties">
+			<props>
+				<!-- MYSQL方言 -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLInnoDBDialect</prop>
+				 
+				 <!-- PostgreSQL
+				<prop key="hibernate.dialect"> org.hibernate.dialect.PostgreSQLDialect</prop>
+				 -->
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<prop key="cache.use_second_level_cache">true</prop>
+				<prop key="hibernate.cache.provider_class">org.hibernate.cache.EhCacheProvider</prop>
+				<prop key="hibernate.cache.provider_configuration_file_resource_path">/ehcache-hibernate.xml</prop>
+				<prop key="hibernate.cache.use_query_cache">true</prop>
+				<prop key="hibernate.cache.use_structured_entries">true</prop>    
+				<prop key="current_session_context_class">thread</prop>
+                <prop key="hibernate.generate_statistics">true</prop>  
+                <prop key="hibernate.use_sql_comments">true</prop>  
+                <prop key="hibernate.default_batch_fetch_size">16</prop>
+			</props>
+		</property>
+		<!-- ORM注解 配置实体包 -->
+		<property name="packagesToScan">
+			<list>
+				<value>org.cgz.oseye.model</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- Druid数据源 -->
+	<bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
+	  	<property name="url" value="jdbc:mysql://localhost:3306/bebop?characterEncoding=utf8" />
+	    <property name="username" value="root" />
+	    <property name="password" value="root" />
+	    <!-- 配置初始化大小、最小、最大 -->
+	    <property name="initialSize" value="1" />
+	    <property name="minIdle" value="1" /> 
+	    <property name="maxActive" value="20" />
+	    <!-- 配置获取连接等待超时的时间 -->
+	    <property name="maxWait" value="60000" />
+	    <!-- 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 -->
+	    <property name="timeBetweenEvictionRunsMillis" value="60000" />
+	    <!-- 配置一个连接在池中最小生存的时间，单位是毫秒 -->
+	    <property name="minEvictableIdleTimeMillis" value="300000" />
+	    <property name="validationQuery" value="SELECT 'x'" />
+	    <property name="testWhileIdle" value="true" />
+	    <property name="testOnBorrow" value="false" />
+	    <property name="testOnReturn" value="false" />
+	    <!-- 打开PSCache，并且指定每个连接上PSCache的大小 -->
+	    <property name="poolPreparedStatements" value="false" />
+	    <property name="maxPoolPreparedStatementPerConnectionSize" value="20" />
+	</bean>
+	
+	<!-- 基于hibernate的事务管理器 -->
+	<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<!-- 采用注解形式的声明式事务管理 -->
+	<tx:annotation-driven transaction-manager="txManager"/>
+	
+    <!-- email 相关配置 -->
+    <!-- 配置异步发送器　-->
+    <bean id="taskExecutor" class="org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor">
+        <property name="corePoolSize" value="10"/>
+        <property name="maxPoolSize" value="50"/>
+    </bean>
+    <!-- 配置邮件模板相关信息 -->
+    <bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+        <!--指定模板文件目录-->
+        <property name="templateLoaderPath" value="/WEB-INF/pages/mailTemplate/" />
+        <property name="freemarkerSettings"><!-- 设置FreeMarker环境属性-->
+            <props>
+                <prop key="template_update_delay">1800</prop><!--刷新模板的周期，单位为秒-->
+                <prop key="default_encoding">UTF-8</prop><!--模板的编码格式 -->
+                <prop key="locale">zh_CN</prop><!-- 本地化设置-->
+            </props>
+        </property>
+    </bean>
+
+	<!-- email -->
+    <bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+       <!-- smtp地址 -->
+        <property name="host" value="smtp.yeah.net" />
+        <!-- 邮件发送地址 -->
+        <property name="username" value="xxxxxx" />
+        <!-- 发送密码 -->
+        <property name="password" value="xxxxxx" />
+        <!-- 发送时使用的字符集 -->
+        <property name="defaultEncoding" value="UTF-8" />
+        <!-- javaMail相关参数设置 -->
+        <property name="javaMailProperties">
+            <props>
+                <prop key="mail.smtp.starttls.enable">true</prop>
+                <!-- 是否需要auth认证 -->
+                <prop key="mail.smtp.auth">true</prop>
+                <!-- 指定ssl　-->
+                <prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+            </props>
+        </property>
+      </bean>
+      
+      <!-- 验证码 -->
+      <bean id="captchaProducer" class="com.google.code.kaptcha.impl.DefaultKaptcha">  
+        <property name="config">  
+            <bean class="com.google.code.kaptcha.util.Config">  
+                <constructor-arg>  
+                    <props>  
+                        <prop key="kaptcha.border">no</prop>  
+                        <prop key="kaptcha.border.color">105,179,90</prop>  
+                        <prop key="kaptcha.textproducer.font.color">blue</prop>  
+                        <prop key="kaptcha.image.width">115</prop>  
+                        <prop key="kaptcha.image.height">42</prop>  
+                        <prop key="kaptcha.textproducer.font.size">35</prop>  
+                        <prop key="kaptcha.session.key">code</prop>  
+                        <prop key="kaptcha.textproducer.char.length">4</prop>  
+                        <prop key="kaptcha.textproducer.font.names">宋体,楷体,微软雅黑</prop>  
+                    </props>  
+                </constructor-arg>  
+            </bean>  
+        </property>  
+    </bean>
+</beans>

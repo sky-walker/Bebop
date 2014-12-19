@@ -1,0 +1,38 @@
+.pager_holder {
+	float: right; clear: both;
+	display:block;
+	font-weight: bold;
+}
+
+.pager_holder a {
+	font-size: 13px;
+	cursor: pointer;
+	margin: 0 5px;
+	color: #108AC6;
+	text-decoration: none;
+}
+
+.pager_holder a:hover {
+	background-color: #108AC6;
+	color: #fff;
+}
+
+.pager_holder a.jp-previous { margin-right: 15px; }
+.pager_holder a.jp-next { margin-left: 15px; }
+
+.pager_holder a.jp-current, a.jp-current:hover { 
+	color: #FF4242;
+	font-weight: bold;
+}
+
+.pager_holder a.jp-disabled, a.jp-disabled:hover {
+	color: #bbb;
+}
+
+.pager_holder a.jp-current, a.jp-current:hover,
+.pager_holder a.jp-disabled, a.jp-disabled:hover {
+	cursor: default; 
+	background: none;
+}
+
+.pager_holder span { margin: 0 5px; }

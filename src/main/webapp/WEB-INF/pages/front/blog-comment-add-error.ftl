@@ -1,0 +1,1 @@
+　　　<span id="errMsg">${errorMsg}</span>
