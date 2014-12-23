@@ -14,7 +14,9 @@ import javax.persistence.Table;
 import org.cgz.oseye.common.SystemConstant;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-
+/**
+ *用户动态
+ */
 @Entity
 @Table(name = "ose_feed")
 @Cache(usage=CacheConcurrencyStrategy.READ_WRITE)
