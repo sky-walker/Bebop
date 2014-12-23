@@ -23,9 +23,9 @@ public class Feed extends BaseModel implements java.io.Serializable {
 	private static final long serialVersionUID = 662347568331765537L;
 	private Integer id;
 	private String optCode;
-	private Users who;
+	private Users who;											/**动态发起者**/
 	private short optType;											/**动态的类型**/
-	private Users whose;
+	private Users whose;											/**关于谁的动态**/
 	
 	private Posts posts;
 	private Comments comments;
